@@ -20,57 +20,55 @@ function App() {
   const [mode, setMode] = useState(modes.start);
 
   return (
-    <div>
-      <div className="App-header">
-        {mode === modes.start && (
-          <StartScreen
-            onClickTest={() => {
-              setMode(modes.test);
-            }}
-            onClickReview={() => {
-              setMode(modes.review);
-            }}
-            onClickTheory={() => {
-              setMode(modes.theory);
-            }}
-            onClickChoices={() => {
-              setMode(modes.choices);
-            }}
-          />
-        )}
-        {mode === modes.test && (
-          <Test
-            onClickBack={() => {
-              setMode(modes.start);
-            }}
-          />
-        )}
-        {mode === modes.review && (
-          <Review
-            onClickBack={() => {
-              setMode(modes.start);
-            }}
-            reviews={reviews}
-          />
-        )}
-        {mode === modes.theory && (
-          <Review
-            onClickBack={() => {
-              setMode(modes.start);
-            }}
-            reviews={theoryQuestions.map(({ question, answer }) => {
-              return { title: question, content: answer.join("\n") };
-            })}
-          />
-        )}
-        {mode === modes.choices && (
-          <MultipleChoices
-            onClickBack={() => {
-              setMode(modes.start);
-            }}
-          />
-        )}
-      </div>
+    <div className="App-header">
+      {mode === modes.start && (
+        <StartScreen
+          onClickTest={() => {
+            setMode(modes.test);
+          }}
+          onClickReview={() => {
+            setMode(modes.review);
+          }}
+          onClickTheory={() => {
+            setMode(modes.theory);
+          }}
+          onClickChoices={() => {
+            setMode(modes.choices);
+          }}
+        />
+      )}
+      {mode === modes.test && (
+        <Test
+          onClickBack={() => {
+            setMode(modes.start);
+          }}
+        />
+      )}
+      {mode === modes.review && (
+        <Review
+          onClickBack={() => {
+            setMode(modes.start);
+          }}
+          reviews={reviews}
+        />
+      )}
+      {mode === modes.theory && (
+        <Review
+          onClickBack={() => {
+            setMode(modes.start);
+          }}
+          reviews={theoryQuestions.map(({ question, answer }) => {
+            return { title: question, content: answer.join("\n") };
+          })}
+        />
+      )}
+      {mode === modes.choices && (
+        <MultipleChoices
+          onClickBack={() => {
+            setMode(modes.start);
+          }}
+        />
+      )}
     </div>
   );
 }

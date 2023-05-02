@@ -2,10 +2,17 @@ import { useState } from "react";
 import Check from "./check.svg";
 import { questions as originQuestions } from "./constants/questions";
 
-const randomQuestions = () => {
-  var cloneQuestions = [...originQuestions],
-    ranNums = [],
-    i = originQuestions.length,
+const questionsPerTopic = 20;
+
+const randomQuestions = (topic) => {
+  let cloneQuestions = [
+      ...originQuestions.slice(
+        topic * questionsPerTopic,
+        (topic + 1) * questionsPerTopic
+      ),
+    ],
+    ranNums = [];
+  let i = cloneQuestions.length,
     j = 0;
 
   while (i--) {
@@ -18,11 +25,27 @@ const randomQuestions = () => {
 };
 
 function Test({ onClickBack }) {
-  const [questions, setQuestions] = useState(randomQuestions());
+  const [topic, setTopic] = useState(undefined);
+  const [questions, setQuestions] = useState();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [chosenAnswer, setChosenAnswer] = useState();
   const [showResult, setShowResult] = useState(false);
   const [finalResult, setFinalResult] = useState(0);
+
+  const renderTopics = () =>
+    Array.from(Array(10).keys()).map((i) => {
+      return (
+        <h2
+          style={{ cursor: "pointer", margin: 0 }}
+          onClick={() => {
+            setTopic(i);
+            setQuestions(randomQuestions(i));
+          }}
+        >
+          Đề số {i + 1}
+        </h2>
+      );
+    });
 
   const renderQuestions = () => (
     <>
@@ -90,7 +113,8 @@ function Test({ onClickBack }) {
             setChosenAnswer(false);
             setCurrentQuestion(0);
             setFinalResult(0);
-            setQuestions(randomQuestions());
+            setQuestions();
+            setTopic(undefined);
           }}
         >
           Làm lại
@@ -99,6 +123,17 @@ function Test({ onClickBack }) {
       </div>
     </div>
   );
+
+  if (topic === undefined) {
+    return (
+      <>
+        <button style={{ marginBottom: "1em" }} onClick={onClickBack}>
+          Trở về
+        </button>
+        {renderTopics()}
+      </>
+    );
+  }
 
   return currentQuestion < questions.length
     ? renderQuestions()

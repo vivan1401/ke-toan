@@ -23,7 +23,7 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   max-width: 40em;
-  margin: 0 auto
+  margin: 1em auto 0 auto
 }
 
 .App-link {
