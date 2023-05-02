@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/ke-toan/static/css/main.18b9fd99.css",
+    "main.js": "/ke-toan/static/js/main.7b69ae46.js",
+    "static/js/787.75f6c0b0.chunk.js": "/ke-toan/static/js/787.75f6c0b0.chunk.js",
+    "static/media/book2.jpg": "/ke-toan/static/media/book2.30768b4efab42bef12eb.jpg",
+    "static/media/check.svg": "/ke-toan/static/media/check.77fbfb44c13abae9740310a865eddcbe.svg",
+    "index.html": "/ke-toan/index.html",
+    "main.18b9fd99.css.map": "/ke-toan/static/css/main.18b9fd99.css.map",
+    "main.7b69ae46.js.map": "/ke-toan/static/js/main.7b69ae46.js.map",
+    "787.75f6c0b0.chunk.js.map": "/ke-toan/static/js/787.75f6c0b0.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.18b9fd99.css",
+    "static/js/main.7b69ae46.js"
+  ]
+}
