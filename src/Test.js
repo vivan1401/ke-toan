@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Check from "./check.svg";
 import { questions as originQuestions } from "./constants/questions";
 
 const questionsPerTopic = 20;
+const COUNT_DOWN_TIME = 900;
 
 const randomQuestions = (topic) => {
   let cloneQuestions = [
@@ -31,6 +32,7 @@ function Test({ onClickBack }) {
   const [chosenAnswer, setChosenAnswer] = useState();
   const [showResult, setShowResult] = useState(false);
   const [finalResult, setFinalResult] = useState(0);
+  const [isTimeUp, setIsTimeUp] = useState(false);
 
   const renderTopics = () =>
     Array.from(Array(10).keys()).map((i) => {
@@ -47,8 +49,20 @@ function Test({ onClickBack }) {
       );
     });
 
+  const countDown = useMemo(
+    () => (
+      <CountDown
+        onTimeUp={() => {
+          setIsTimeUp(true);
+        }}
+      />
+    ),
+    [isTimeUp]
+  );
+
   const renderQuestions = () => (
     <>
+      {countDown}
       <b style={{ whiteSpace: "pre-wrap" }}>
         {`${currentQuestion + 1}. ${questions[currentQuestion].question}`}
       </b>
@@ -103,6 +117,7 @@ function Test({ onClickBack }) {
 
   const renderResult = () => (
     <div>
+      {isTimeUp && <div>Hết thời gian</div>}
       <h2>
         Số câu đúng: {finalResult}/{questions.length}
       </h2>
@@ -115,6 +130,7 @@ function Test({ onClickBack }) {
             setFinalResult(0);
             setQuestions();
             setTopic(undefined);
+            setIsTimeUp(false);
           }}
         >
           Làm lại
@@ -135,9 +151,45 @@ function Test({ onClickBack }) {
     );
   }
 
-  return currentQuestion < questions.length
+  return currentQuestion < questions.length && !isTimeUp
     ? renderQuestions()
     : renderResult();
+}
+
+function CountDown({ onTimeUp }) {
+  const [minutes, setMinutes] = useState(Math.floor(COUNT_DOWN_TIME / 60));
+  const [seconds, setSeconds] = useState(COUNT_DOWN_TIME % 60);
+  useEffect(() => {
+    let myInterval = setInterval(() => {
+      if (seconds > 0) {
+        setSeconds(seconds - 1);
+      }
+      if (seconds === 0) {
+        if (minutes === 0) {
+          onTimeUp();
+          clearInterval(myInterval);
+        } else {
+          setMinutes(minutes - 1);
+          setSeconds(59);
+        }
+      }
+    }, 1000);
+    return () => {
+      clearInterval(myInterval);
+    };
+  });
+
+  return (
+    <div>
+      {minutes === 0 && seconds === 0 ? (
+        <h2>Hết thời gian</h2>
+      ) : (
+        <h2>
+          {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
+        </h2>
+      )}
+    </div>
+  );
 }
 
 export default Test;
