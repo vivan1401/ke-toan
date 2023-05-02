@@ -1,7 +1,6 @@
-import {reviews} from "./constants/preview";
 import {useState} from "react";
 
-function Review({onClickBack}) {
+function Review({onClickBack, reviews}) {
     const [index, setIndex] = useState(-1);
     const onClickList = () => {
         setIndex(-1)
