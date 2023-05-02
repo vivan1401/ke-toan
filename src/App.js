@@ -6,6 +6,7 @@ import StartScreen from "./StartScreen";
 import Review from "./Review";
 import { theoryQuestions } from "./constants/theory";
 import Test from "./Test";
+import MultipleChoices from "./MultipleChoices";
 
 const modes = {
   start: 1,
@@ -60,6 +61,13 @@ function App() {
             reviews={theoryQuestions.map(({ question, answer }) => {
               return { title: question, content: answer.join("\n") };
             })}
+          />
+        )}
+        {mode === modes.choices && (
+          <MultipleChoices
+            onClickBack={() => {
+              setMode(modes.start);
+            }}
           />
         )}
       </div>
